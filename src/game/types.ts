@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — shared game types
+// Freewheeler Bike League — shared game types
 //
 // A track is pure data (TrackDef). Adding a new track = one new file in
 // src/data/tracks/ that exports a TrackDef, registered in src/data/tracks/index.ts.

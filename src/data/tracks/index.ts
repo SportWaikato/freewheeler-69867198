@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — track registry
+// Freewheeler Bike League — track registry
 //
 // SHIPPING A NEW TRACK (the quarterly release path):
 //   1. Copy an existing track file, change the id/name/points/features/scenery.

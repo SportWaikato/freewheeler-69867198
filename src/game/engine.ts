@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — game engine
+// Freewheeler Bike League — game engine
 //
 // Owns the Three.js scene and the whole race simulation for the LOCAL player,
 // plus lightweight interpolated proxies for remote karts. React never touches

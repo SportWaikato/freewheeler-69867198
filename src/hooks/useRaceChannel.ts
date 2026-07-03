@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — multiplayer race channel (Supabase Realtime)
+// Freewheeler Bike League — multiplayer race channel (Supabase Realtime)
 //
 // One broadcast channel per room code carries everything:
 //   presence            → lobby roster + join order (grid slots / kart colours)
@@ -101,7 +101,7 @@ export function useRaceChannel(playerId: string, playerName: string): UseRaceCha
 
   const subscribe = useCallback((code: string, hosting: boolean) => {
     teardown();
-    const ch = supabase.channel(`cyclecup:${code}`, {
+    const ch = supabase.channel(`bikeleague:${code}`, {
       config: { broadcast: { self: false }, presence: { key: playerId } },
     });
 
@@ -199,7 +199,7 @@ export function useRaceChannel(playerId: string, playerName: string): UseRaceCha
         host_user_id: auth.user.id,
         player_count: 1,
         laps,
-        game_mode: 'cycle_cup',
+        game_mode: 'bike_league',
       });
     }
     return code;

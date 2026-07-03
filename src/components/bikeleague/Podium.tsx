@@ -1,4 +1,4 @@
-// Cycle Cup — podium / results screen.
+// Freewheeler Bike League — podium / results screen.
 import type { RaceFinishData, TrackDef } from '@/game/types';
 import type { RoomPlayer } from '@/hooks/useRaceChannel';
 

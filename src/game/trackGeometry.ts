@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — track mesh construction
+// Freewheeler Bike League — track mesh construction
 //
 // Turns a TrackDef + TrackCurve into real 3D geometry: asphalt ribbon that
 // follows elevation, striped kerbs on both edges, low barrier walls, a shoulder
@@ -112,12 +112,12 @@ function buildStartGate(curve: TrackCurve, accentColor: number): THREE.Group {
   ctx.fillStyle = accent;
   for (let i = 0; i < 16; i++) ctx.fillRect(i * 32, i % 2 === 0 ? 0 : 48, 32, 48);
   ctx.fillStyle = '#0d0c06';
-  ctx.fillRect(64, 14, 384, 68);
+  ctx.fillRect(24, 14, 464, 68);
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 52px Helvetica, Arial, sans-serif';
+  ctx.font = '900 30px Helvetica, Arial, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('CYCLE CUP', 256, 50);
+  ctx.fillText('FREEWHEELER BIKE LEAGUE', 256, 50);
   const tex = new THREE.CanvasTexture(cv);
   tex.colorSpace = THREE.SRGBColorSpace;
   // One banner facing each direction so the text reads correctly on approach

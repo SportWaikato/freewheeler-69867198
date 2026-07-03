@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — procedural road bike + rider model
+// Freewheeler Bike League — procedural road bike + rider model
 //
 // Replaces the earlier kart model: this is a cycling app, so the thing on
 // track is a push bike with a rider in a racing crouch. Built from primitives

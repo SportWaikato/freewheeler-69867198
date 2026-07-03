@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — kart physics
+// Freewheeler Bike League — kart physics
 //
 // Forward speed comes from real pedalling power (Wattbike FTMS). Steering is
 // touch-button lateral movement. The model is arcade-tuned: power sets a target

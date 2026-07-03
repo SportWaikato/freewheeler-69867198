@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — placement scoring
+// Freewheeler Bike League — placement scoring
 //
 // Placement points feed the EXISTING award_game_ride_points() trigger via
 // game_rides.placement_points, so kart races land on the same student_points

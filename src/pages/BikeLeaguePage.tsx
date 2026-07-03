@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — page orchestrator
+// Freewheeler Bike League — page orchestrator
 //
 // Flow: course select → lobby (bike connect · solo / host / join) → race → podium.
 // Owns the Wattbike hook (one BLE connection across the whole flow), the race
@@ -14,14 +14,14 @@ import { useAuth } from '@/hooks/useAuth';
 import { useWattbikeBluetooth } from '@/hooks/useWattbikeBluetooth';
 import { useRaceChannel } from '@/hooks/useRaceChannel';
 import type { RaceFinishData, TrackDef } from '@/game/types';
-import TrackSelect from '@/components/cyclecup/TrackSelect';
-import Lobby from '@/components/cyclecup/Lobby';
-import RaceScreen from '@/components/cyclecup/RaceScreen';
-import Podium from '@/components/cyclecup/Podium';
+import TrackSelect from '@/components/bikeleague/TrackSelect';
+import Lobby from '@/components/bikeleague/Lobby';
+import RaceScreen from '@/components/bikeleague/RaceScreen';
+import Podium from '@/components/bikeleague/Podium';
 
 type Screen = 'select' | 'lobby' | 'race' | 'podium';
 
-export default function CycleCupPage() {
+export default function BikeLeaguePage() {
   const navigate = useNavigate();
   const { session } = useAuth();
   const ble = useWattbikeBluetooth();
@@ -81,7 +81,7 @@ export default function CycleCupPage() {
         avg_cadence_rpm: Math.round(data.avgCadenceRpm),
         elevation_gain_m: Math.round(data.elevationGainM),
         duration_seconds: data.finishTimeSeconds,
-        source: 'cycle_cup',
+        source: 'bike_league',
         placement_points: data.placementPoints,
       });
       if (error) throw error;

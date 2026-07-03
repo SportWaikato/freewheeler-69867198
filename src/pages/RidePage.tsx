@@ -291,16 +291,16 @@ export default function RidePage() {
                 </p>
               </div>
 
-              {/* Cycle Cup — kart racing mode */}
+              {/* Freewheeler Bike League — kart racing mode */}
               <button
                 type="button"
-                onClick={() => navigate('/cycle-cup')}
+                onClick={() => navigate('/bike-league')}
                 className="w-full text-left border-2 border-brand-dark bg-brand-dark text-white p-5 shadow-[6px_6px_0_0_hsl(var(--brand-green))] hover:-translate-y-0.5 transition-transform"
               >
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <div className="font-body text-[10px] uppercase tracking-widest text-brand-neon">New game mode</div>
-                    <div className="font-display text-3xl uppercase leading-none text-brand-neon">Cycle Cup 🏁</div>
+                    <div className="font-display text-3xl uppercase leading-none text-brand-neon">Freewheeler Bike League 🏁</div>
                     <p className="font-body text-sm text-white/70 mt-1">
                       Kart racing on your Wattbike — items, boosts and up to 4 riders per race.
                     </p>

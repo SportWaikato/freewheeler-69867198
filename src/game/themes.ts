@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — theme registry
+// Freewheeler Bike League — theme registry
 //
 // A theme owns the look of a track: sky gradient, fog, lighting tint, ground,
 // track palette, and a set of named scenery builders that TrackDef scenery

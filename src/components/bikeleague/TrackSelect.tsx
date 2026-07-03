@@ -1,4 +1,4 @@
-// Cycle Cup — course select. Arcade-style cards, one per TrackDef.
+// Freewheeler Bike League — course select. Arcade-style cards, one per TrackDef.
 import type { TrackDef } from '@/game/types';
 import { TRACKS } from '@/data/tracks';
 import { THEMES } from '@/game/themes';
@@ -61,8 +61,8 @@ export default function TrackSelect({ onSelect, onBack }: Props) {
           ← Back to Ride
         </button>
         <div className="mb-8">
-          <div className="tape-element mb-3">FreeWheeler presents</div>
-          <h1 className="font-display text-6xl md:text-7xl uppercase leading-none text-brand-neon">Cycle Cup</h1>
+          <div className="tape-element mb-3">Game on</div>
+          <h1 className="font-display text-6xl md:text-7xl uppercase leading-none text-brand-neon">Freewheeler Bike League</h1>
           <p className="font-body text-white/70 mt-2 max-w-xl">
             Pick a course. Pedal hard for speed, steer with the buttons, grab item boxes, boost past your mates.
           </p>

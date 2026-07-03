@@ -1,4 +1,4 @@
-// Cycle Cup — lobby: bike connection, solo start, or create/join a room.
+// Freewheeler Bike League — lobby: bike connection, solo start, or create/join a room.
 import { useState } from 'react';
 import type { TrackDef } from '@/game/types';
 import type { UseWattbikeBluetoothReturn } from '@/hooks/useWattbikeBluetooth';

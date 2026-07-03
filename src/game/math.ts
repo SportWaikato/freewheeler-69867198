@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — track curve sampling
+// Freewheeler Bike League — track curve sampling
 //
 // A TrackDef's control points become a closed Catmull-Rom loop. Everything in
 // the game addresses positions as (progress metres, lateral -1..1); this module

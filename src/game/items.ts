@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — item system
+// Freewheeler Bike League — item system
 //
 // Mario Kart-style pickups with a physical-effort twist:
 //  · turbo  — +35 % speed for 3 s

@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Cycle Cup — race screen
+// Freewheeler Bike League — race screen
 //
 // Mounts the GameEngine, renders the HUD + touch steering overlay, and bridges
 // the multiplayer channel to the engine. Steering is on-screen hold buttons

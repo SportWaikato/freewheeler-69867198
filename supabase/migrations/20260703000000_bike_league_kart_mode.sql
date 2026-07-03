@@ -1,6 +1,6 @@
 -- ─────────────────────────────────────────────────────────────────────────────
--- 20260703000000_cycle_cup_kart_mode.sql
--- Cycle Cup (kart-racing rebuild) schema extensions.
+-- 20260703000000_bike_league_kart_mode.sql
+-- Freewheeler Bike League (kart-racing rebuild) schema extensions.
 --
 -- Deliberately additive: game_race_rooms / game_race_results / game_rides and
 -- the award_game_ride_points() trigger keep working exactly as before. Kart
@@ -14,13 +14,13 @@ alter table public.game_rides
   drop constraint if exists game_rides_source_check;
 alter table public.game_rides
   add constraint game_rides_source_check
-  check (source in ('game', 'simulator', 'wattbike', 'cycle_cup'));
+  check (source in ('game', 'simulator', 'wattbike', 'bike_league'));
 
 -- 2. Kart-mode room metadata
 alter table public.game_race_rooms
   add column if not exists laps integer not null default 3,
   add column if not exists game_mode text not null default 'route'
-    check (game_mode in ('route', 'cycle_cup'));
+    check (game_mode in ('route', 'bike_league'));
 
 -- 3. Richer per-racer results (best lap for future track leaderboards)
 alter table public.game_race_results
