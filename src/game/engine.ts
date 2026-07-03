@@ -16,7 +16,7 @@ import type {
 import { TrackCurve, hashString, loopGap, mulberry32 } from './math';
 import { buildTrackMeshes, type BuiltTrack } from './trackGeometry';
 import { THEMES, buildScenery, buildSky, type ThemeDef } from './themes';
-import { buildKart, KART_COLORS, type KartModel } from './kartModel';
+import { buildBike, RIDER_COLORS, type BikeModel } from './bikeModel';
 import { targetSpeed, stepSpeed, stepLateral, PHYSICS } from './physics';
 import { ITEM_DURATIONS, rollItem, stepCharge } from './items';
 import { placementPoints, soloPoints } from './scoring';
@@ -48,13 +48,15 @@ export interface EngineOptions {
 
 interface RemoteKart {
   state: KartState;
-  model: KartModel;
+  model: BikeModel;
   targetProgress: number;
   targetLateral: number;
   netSpeed: number;
 }
 
-const CAM = { back: 6.2, up: 3.0, lookAhead: 9, fov: 68, boostFov: 80 } as const;
+// Tuned for the bike silhouette (narrower/taller than a kart): slightly closer
+// and lower so the rider reads larger without hiding the road ahead.
+const CAM = { back: 5.4, up: 2.6, lookAhead: 9, fov: 68, boostFov: 80 } as const;
 
 export class GameEngine {
   readonly track: TrackDef;
@@ -72,7 +74,7 @@ export class GameEngine {
 
   // Local player
   private me: KartState;
-  private meModel: KartModel;
+  private meModel: BikeModel;
   private steerInput = 0;              // -1..1
   private riderWatts = 0;
   private riderCadence = 0;
@@ -161,9 +163,9 @@ export class GameEngine {
     this.scene.add(buildScenery(theme, track.scenery, this.curve, hashString(track.id)));
     this.scene.add(this.hazardGroup);
 
-    // Local kart
-    this.me = this.makeKartState(opts.playerId, opts.playerName, KART_COLORS[opts.colorIndex % KART_COLORS.length]);
-    this.meModel = buildKart(opts.playerName, this.me.color);
+    // Local rider
+    this.me = this.makeKartState(opts.playerId, opts.playerName, RIDER_COLORS[opts.colorIndex % RIDER_COLORS.length]);
+    this.meModel = buildBike(opts.playerName, this.me.color);
     this.meModel.nametag.visible = false; // you don't need your own tag
     this.scene.add(this.meModel.group);
 
@@ -247,7 +249,7 @@ export class GameEngine {
     if (s.id === this.opts.playerId) return;
     let r = this.remotes.get(s.id);
     if (!r) {
-      const model = buildKart(s.n, s.c);
+      const model = buildBike(s.n, s.c);
       this.scene.add(model.group);
       r = {
         state: this.makeKartState(s.id, s.n, s.c),
@@ -370,7 +372,7 @@ export class GameEngine {
     return best && best.gap < 220 ? best.id : null;
   }
 
-  private placeKart(model: KartModel, k: KartState, dt: number) {
+  private placeKart(model: BikeModel, k: KartState, dt: number, steerLean = 0, cadenceRpm?: number) {
     const dist = ((k.progress % this.curve.lengthM) + this.curve.lengthM) % this.curve.lengthM;
     const s = this.curve.sampleAt(dist);
     const pos = s.pos.clone().addScaledVector(s.normal, k.lateral * s.halfWidth);
@@ -379,14 +381,19 @@ export class GameEngine {
     // Pitch with the road
     const grad = this.curve.gradientAt(dist, 6);
     model.body.rotation.x = THREE.MathUtils.lerp(model.body.rotation.x, -Math.atan(grad) * 0.7, dt * 6 || 1);
-    // Wheel spin
-    const spin = (k.speed / 0.3) * dt;
-    model.wheels.forEach(w => { w.rotation.x += spin; });
+    // Lean INTO corners like a real rider: physical lean angle atan(v²·κ/g)
+    // (κ > 0 = left turn = negative roll), plus the local steer-input lean.
+    const kappa = this.curve.curvatureAt(dist);
+    const targetRoll = THREE.MathUtils.clamp(
+      -Math.atan((k.speed * k.speed * kappa) / 9.81) + steerLean,
+      -0.42, 0.42,
+    );
+    model.body.rotation.z = THREE.MathUtils.lerp(model.body.rotation.z, targetRoll, 1 - Math.exp(-(dt || 0.016) * 5));
+    // Wheel roll + pedalling (cadence estimated from speed for remote riders)
+    const cadence = cadenceRpm ?? Math.min(100, k.speed * 9);
+    model.update(dt, k.speed, cadence);
     model.shieldMesh.visible = k.shielded;
     model.boostFlames.forEach(f => { f.visible = k.boostTimer > 0; });
-    if (k.boostTimer > 0) {
-      model.boostFlames.forEach(f => { f.scale.y = 0.8 + Math.random() * 0.5; });
-    }
   }
 
   private updateCamera(dt: number) {
@@ -455,11 +462,10 @@ export class GameEngine {
     k.progress += k.speed * dt;
     this.distanceM += k.speed * dt;
 
-    // Steering
+    // Steering — lean is applied in placeKart (into the turn, like a real rider)
     const st = stepLateral(k.lateral, this.steerInput, k.speed, dt);
     k.lateral = st.lateral;
-    this.lean = THREE.MathUtils.lerp(this.lean, -this.steerInput * 0.18, 1 - Math.exp(-dt * 8));
-    this.meModel.body.rotation.z = this.lean;
+    this.lean = THREE.MathUtils.lerp(this.lean, this.steerInput * 0.14, 1 - Math.exp(-dt * 8));
 
     // Climb accumulation
     const y = this.curve.sampleAt(Math.max(k.progress, 0)).pos.y;
@@ -615,7 +621,7 @@ export class GameEngine {
       for (const box of this.built.features.itemBoxes) box.mesh.rotation.y += dt * 1.6;
     }
     this.stepRemotes(dt);
-    this.placeKart(this.meModel, this.me, dt);
+    this.placeKart(this.meModel, this.me, dt, this.lean, this.riderCadence);
     this.updateCamera(dt);
 
     this.hudAccum += dt;

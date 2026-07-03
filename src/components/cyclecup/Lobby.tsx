@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { TrackDef } from '@/game/types';
 import type { UseWattbikeBluetoothReturn } from '@/hooks/useWattbikeBluetooth';
 import type { UseRaceChannelReturn } from '@/hooks/useRaceChannel';
-import { KART_COLORS } from '@/game/kartModel';
+import { RIDER_COLORS } from '@/game/bikeModel';
 
 interface Props {
   track: TrackDef;
@@ -122,7 +122,7 @@ export default function Lobby({
                 <div className="space-y-1.5">
                   {channel.players.map((p, i) => (
                     <div key={p.id} className="flex items-center gap-3 bg-white/8 border border-white/15 px-3 py-2">
-                      <span className="w-4 h-4 rounded-full border-2 border-white/40" style={{ background: hex(KART_COLORS[i % KART_COLORS.length]) }} />
+                      <span className="w-4 h-4 rounded-full border-2 border-white/40" style={{ background: hex(RIDER_COLORS[i % RIDER_COLORS.length]) }} />
                       <span className="font-body flex-1">{p.name}{p.id === playerId && ' (you)'}</span>
                       {i === 0 && <span className="font-body text-[10px] uppercase tracking-widest text-brand-neon">Host</span>}
                     </div>
@@ -156,7 +156,7 @@ export default function Lobby({
         </div>
 
         <div className="mt-6 border border-white/10 p-3 font-body text-xs text-white/40 leading-relaxed">
-          <strong className="text-white/60">How it works:</strong> your pedalling power sets your speed — the harder you ride, the faster your kart.
+          <strong className="text-white/60">How it works:</strong> your pedalling power sets your speed — the harder you ride, the faster your bike.
           Steer with the on-screen buttons. Ride through item boxes for pick-ups, hit green pads for a boost,
           and spike your cadence to fill the sprint meter for a free mini-turbo.
         </div>
